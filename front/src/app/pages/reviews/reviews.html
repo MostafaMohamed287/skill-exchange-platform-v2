@@ -1,0 +1,115 @@
+<section class="mx-auto mt-20 max-w-6xl px-6">
+
+  <div class="text-center">
+    <h1 class="text-5xl font-bold text-slate-800">
+      Community Reviews
+    </h1>
+
+    <p class="mt-4 text-lg text-gray-600">
+      Discover what our users say about their learning experience.
+    </p>
+
+    <button
+      (click)="toggleForm()"
+      class="mt-6 px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+    >
+      {{ showForm() ? 'Cancel' : '+ Add Review' }}
+    </button>
+  </div>
+
+  @if (showForm()) {
+    <div class="mt-8 max-w-xl mx-auto rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+      <h3 class="text-xl font-semibold text-slate-800 mb-4">Add a New Review</h3>
+
+      <div class="flex flex-col gap-3">
+        <input
+          type="text"
+          [(ngModel)]="newReview.reviewer"
+          placeholder="Reviewer User ID"
+          class="border border-gray-300 rounded-lg px-4 py-2"
+        />
+        <input
+          type="text"
+          [(ngModel)]="newReview.reviewee"
+          placeholder="Reviewee User ID"
+          class="border border-gray-300 rounded-lg px-4 py-2"
+        />
+        <input
+          type="text"
+          [(ngModel)]="newReview.skill"
+          placeholder="Skill ID"
+          class="border border-gray-300 rounded-lg px-4 py-2"
+        />
+        <input
+          type="number"
+          [(ngModel)]="newReview.rating"
+          min="1"
+          max="5"
+          placeholder="Rating (1-5)"
+          class="border border-gray-300 rounded-lg px-4 py-2"
+        />
+        <textarea
+          [(ngModel)]="newReview.comment"
+          placeholder="Comment"
+          class="border border-gray-300 rounded-lg px-4 py-2"
+        ></textarea>
+
+        <button
+          (click)="submitReview()"
+          class="mt-2 px-6 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition"
+        >
+          Submit Review
+        </button>
+      </div>
+    </div>
+  }
+
+  <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+    @for (review of reviews(); track review._id) {
+
+      <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-lg transition">
+
+        <div class="flex items-center gap-4">
+
+          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white font-bold">
+            {{ review.reviewee?.name?.[0] || '?' }}
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-slate-800">
+              {{ review.reviewee?.name || 'Unknown user' }}
+            </h3>
+
+            <p class="text-sm text-gray-500">
+              {{ review.skill?.title || 'Unknown skill' }}
+            </p>
+          </div>
+
+        </div>
+
+        <div class="mt-4 text-yellow-500 text-xl">
+          {{ '⭐'.repeat(review.rating) }}
+        </div>
+
+        <p class="mt-4 text-gray-600">
+          {{ review.comment }}
+        </p>
+
+        <p class="mt-6 text-sm text-gray-400">
+          Reviewed by {{ review.reviewer?.name || 'Unknown user' }}
+        </p>
+
+      </div>
+
+    } @empty {
+
+      <p class="text-center text-gray-500 col-span-3">
+        No reviews found.
+      </p>
+
+    }
+
+  </div>
+
+</section>

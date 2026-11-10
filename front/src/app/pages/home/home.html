@@ -1,0 +1,102 @@
+<section class="hero">
+  <div class="hero-content">
+    <h1>Share Skills.<br><span>Learn Together.</span></h1>
+
+    <p>
+      Connect with talented people, exchange knowledge,
+      and grow your skills through our community.
+    </p>
+
+    <div class="hero-buttons">
+      <button class="btn-primary">Explore Skills</button>
+      <button class="btn-outline">Join Now</button>
+    </div>
+  </div>
+</section>
+
+<section class="search-section">
+  <h2>Find a Skill</h2>
+
+  <div class="search-box">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="onSearch()"
+      placeholder="Search for Programming, Design, Languages..."
+    />
+    <button (click)="onSearch()">Search</button>
+  </div>
+
+  @if (hasSearched) {
+    <div class="search-results">
+      @if (searchResults.length > 0) {
+        <div class="skills-container">
+          @for (skill of searchResults; track skill._id) {
+            <div class="skill-card">
+              <h3>{{ skill.title }}</h3>
+              <p>{{ skill.owner?.name || 'Unknown' }}</p>
+              <p>{{ skill.category }} • {{ skill.level }}</p>
+            </div>
+          }
+        </div>
+      } @else {
+        <p>No skills found matching "{{ searchTerm }}"</p>
+      }
+    </div>
+  }
+</section>
+
+<section class="categories">
+  <h2>Popular Categories</h2>
+
+  <div class="category-container">
+    <div class="category-card">
+      💻
+      <h3>Programming</h3>
+    </div>
+
+    <div class="category-card">
+      🎨
+      <h3>Design</h3>
+    </div>
+
+    <div class="category-card">
+      🌍
+      <h3>Languages</h3>
+    </div>
+
+    <div class="category-card">
+      📈
+      <h3>Marketing</h3>
+    </div>
+  </div>
+</section>
+
+<section class="featured">
+  <h2>Featured Skills</h2>
+
+  <div class="skills-container">
+
+    <div class="skill-card">
+      <h3>Angular Development</h3>
+      <p>Ahmed Mohamed</p>
+      <span>⭐⭐⭐⭐⭐</span>
+      <button>View Profile</button>
+    </div>
+
+    <div class="skill-card">
+      <h3>UI/UX Design</h3>
+      <p>Sara Ali</p>
+      <span>⭐⭐⭐⭐</span>
+      <button>View Profile</button>
+    </div>
+
+    <div class="skill-card">
+      <h3>German Language</h3>
+      <p>Omar Hassan</p>
+      <span>⭐⭐⭐⭐⭐</span>
+      <button>View Profile</button>
+    </div>
+
+  </div>
+</section>

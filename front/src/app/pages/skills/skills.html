@@ -1,0 +1,277 @@
+<div class="mx-auto max-w-7xl p-6">
+
+  <!-- Statistics -->
+
+  <div class="mb-8 grid gap-4 md:grid-cols-4">
+
+    <div class="rounded-xl bg-blue-600 p-5 text-center text-white shadow">
+      <h3 class="text-lg font-semibold">Total Skills</h3>
+      <p class="mt-2 text-4xl font-bold">{{skills.length}}</p>
+    </div>
+
+    <div class="rounded-xl bg-green-600 p-5 text-center text-white shadow">
+      <h3 class="text-lg font-semibold">Programming</h3>
+      <p class="mt-2 text-4xl font-bold">
+        {{skills.filter(s=>s.category==='Programming').length}}
+      </p>
+    </div>
+
+    <div class="rounded-xl bg-yellow-500 p-5 text-center text-white shadow">
+      <h3 class="text-lg font-semibold">Intermediate</h3>
+      <p class="mt-2 text-4xl font-bold">
+        {{skills.filter(s=>s.level==='Intermediate').length}}
+      </p>
+    </div>
+
+    <div class="rounded-xl bg-purple-600 p-5 text-center text-white shadow">
+      <h3 class="text-lg font-semibold">Advanced</h3>
+      <p class="mt-2 text-4xl font-bold">
+        {{skills.filter(s=>s.level==='Advanced').length}}
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Form -->
+
+  <div class="rounded-2xl bg-white p-8 shadow-lg">
+
+    <h2 class="mb-8 text-center text-3xl font-bold text-blue-700">
+
+      {{editingSkillId ? 'Update Skill' : 'Add New Skill'}}
+
+    </h2>
+
+    <form
+      (ngSubmit)="editingSkillId ? updateSkill() : addSkill()">
+
+      <div class="grid gap-6 md:grid-cols-2">
+
+        <div>
+
+          <label class="mb-2 block font-semibold">
+            Skill Title
+          </label>
+
+          <input
+            type="text"
+            name="title"
+            [(ngModel)]="title"
+            placeholder="Enter skill title"
+            class="w-full rounded-lg border p-3"
+            required>
+
+        </div>
+
+        <div>
+
+          <label class="mb-2 block font-semibold">
+            Category
+          </label>
+
+          <input
+            type="text"
+            name="category"
+            [(ngModel)]="category"
+            placeholder="Programming"
+            class="w-full rounded-lg border p-3"
+            required>
+
+        </div>
+
+        <div class="md:col-span-2">
+
+          <label class="mb-2 block font-semibold">
+            Description
+          </label>
+
+          <textarea
+            name="description"
+            [(ngModel)]="description"
+            rows="4"
+            placeholder="Describe your skill"
+            class="w-full rounded-lg border p-3"
+            required></textarea>
+
+        </div>
+
+        <div>
+
+          <label class="mb-2 block font-semibold">
+            Level
+          </label>
+
+          <select
+            name="level"
+            [(ngModel)]="level"
+            class="w-full rounded-lg border p-3"
+            required>
+
+            <option value="">Select Level</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+
+          </select>
+
+        </div>
+
+        <div>
+
+          <label class="mb-2 block font-semibold">
+            User ID
+          </label>
+
+          <input
+            type="text"
+            name="owner"
+            [(ngModel)]="owner"
+            placeholder="Enter User ID"
+            class="w-full rounded-lg border p-3"
+            required>
+
+        </div>
+
+      </div>
+
+      <div class="mt-8 flex gap-4">
+
+        @if(editingSkillId){
+
+        <button
+          type="submit"
+          class="flex-1 rounded-xl bg-green-600 py-3 font-semibold text-white hover:bg-green-700">
+
+          Update Skill
+
+        </button>
+
+        <button
+          type="button"
+          (click)="clearForm()"
+          class="flex-1 rounded-xl bg-gray-500 py-3 font-semibold text-white hover:bg-gray-600">
+
+          Cancel
+
+        </button>
+
+        }
+
+        @else{
+
+        <button
+          type="submit"
+          class="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700">
+
+          Add Skill
+
+        </button>
+
+        }
+
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- Skills -->
+
+  <div class="mt-10">
+
+    <h2 class="mb-6 text-3xl font-bold">
+
+      Available Skills
+
+    </h2>
+
+    @if(skills.length===0){
+
+    <div class="rounded-xl bg-gray-100 p-6 text-center">
+
+      No Skills Available
+
+    </div>
+
+    }
+
+    @else{
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+      @for(skill of skills;track skill._id){
+
+      <div
+        class="rounded-2xl border bg-white p-6 shadow transition hover:-translate-y-2 hover:shadow-xl">
+
+        <div class="flex items-center justify-between">
+
+          <h3 class="text-xl font-bold text-blue-700">
+
+            {{skill.title}}
+
+          </h3>
+
+          <span
+            class="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
+
+            {{skill.level}}
+
+          </span>
+
+        </div>
+
+        <p class="mt-4 text-gray-600">
+
+          {{skill.description}}
+
+        </p>
+
+        <div class="mt-5 flex items-center justify-between">
+
+          <span
+            class="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
+
+            {{skill.category}}
+
+          </span>
+
+          <span class="text-sm text-gray-500">
+
+            👤 {{skill.owner?.name}}
+
+          </span>
+
+        </div>
+
+        <div class="mt-6 flex gap-3">
+
+          <button
+            (click)="editSkill(skill)"
+            class="flex-1 rounded-lg bg-yellow-500 py-2 font-semibold text-white hover:bg-yellow-600">
+
+            Edit
+
+          </button>
+
+          <button
+            (click)="deleteSkill(skill._id)"
+            class="flex-1 rounded-lg bg-red-600 py-2 font-semibold text-white hover:bg-red-700">
+
+            Delete
+
+          </button>
+
+        </div>
+
+      </div>
+
+      }
+
+    </div>
+
+    }
+
+  </div>
+
+</div>

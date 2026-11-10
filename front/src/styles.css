@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'tailwindcss';
+body{
+    margin:0;
+    background:#f5f7fb;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+section{
+    padding:60px 0;
+}
+
+button{
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+input,
+select,
+textarea{
+    transition:.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 10px rgba(37,99,235,.2);
+}

@@ -1,0 +1,38 @@
+nav{
+    position: static;
+}
+
+.nav-link{
+    color:white;
+    text-decoration:none;
+    font-weight:500;
+    transition:.3s;
+    position:relative;
+}
+
+.nav-link:hover{
+    color:#60a5fa;
+}
+
+.nav-link::after{
+    content:'';
+    position:absolute;
+    width:0%;
+    left:0;
+    bottom:-6px;
+    height:2px;
+    background:#3b82f6;
+    transition:.3s;
+}
+
+.nav-link:hover::after{
+    width:100%;
+}
+
+a{
+    transition: .3s;
+}
+
+a:hover{
+    transform: translateY(-2px);
+}

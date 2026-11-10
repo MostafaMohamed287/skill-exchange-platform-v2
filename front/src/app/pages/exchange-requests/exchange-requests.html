@@ -1,0 +1,273 @@
+<div class="mx-auto max-w-6xl p-6">
+
+  <div class="mb-8 grid gap-4 md:grid-cols-4">
+
+    <div class="rounded-xl bg-blue-600 p-5 text-center text-white shadow">
+      <h3 class="text-lg font-semibold">Total Requests</h3>
+      <p class="mt-3 text-4xl font-bold">{{ totalRequests }}</p>
+    </div>
+
+    <div class="rounded-xl bg-yellow-500 p-5 text-center text-white shadow">
+      <h3 class="text-lg font-semibold">Pending</h3>
+      <p class="mt-3 text-4xl font-bold">{{ pendingRequests }}</p>
+    </div>
+
+    <div class="rounded-xl bg-green-600 p-5 text-center text-white shadow">
+      <h3 class="text-lg font-semibold">Accepted</h3>
+      <p class="mt-3 text-4xl font-bold">{{ acceptedRequests }}</p>
+    </div>
+
+    <div class="rounded-xl bg-red-600 p-5 text-center text-white shadow">
+      <h3 class="text-lg font-semibold">Rejected</h3>
+      <p class="mt-3 text-4xl font-bold">{{ rejectedRequests }}</p>
+    </div>
+
+  </div>
+
+  <div class="rounded-xl bg-white p-6 shadow">
+
+    <h2 class="mb-6 text-3xl font-bold text-blue-700">
+      Create Exchange Request
+    </h2>
+
+    <form [formGroup]="requestForm" (ngSubmit)="createRequest()">
+
+      <div class="grid gap-5 md:grid-cols-2">
+
+        <div>
+          <label class="font-semibold">Sender</label>
+
+          <select formControlName="sender" class="mt-2 w-full rounded-lg border p-3">
+
+            <option value="">Select Sender</option>
+
+            @for(user of users; track user._id){
+
+            <option [value]="user._id">
+              {{user.name}} - {{user.email}}
+            </option>
+
+            }
+
+          </select>
+
+        </div>
+
+        <div>
+
+          <label class="font-semibold">
+            Receiver
+          </label>
+
+          <select formControlName="receiver" class="mt-2 w-full rounded-lg border p-3">
+
+            <option value="">Select Receiver</option>
+
+            @for(user of users; track user._id){
+
+            <option [value]="user._id">
+              {{user.name}} - {{user.email}}
+            </option>
+
+            }
+
+          </select>
+
+        </div>
+
+        <div>
+
+          <label class="font-semibold">
+            Offered Skill
+          </label>
+
+          <select formControlName="offeredSkill" class="mt-2 w-full rounded-lg border p-3">
+
+            <option value="">Select Skill</option>
+
+            @for(skill of skills; track skill._id){
+
+            <option [value]="skill._id">
+              {{skill.title}}
+            </option>
+
+            }
+
+          </select>
+
+        </div>
+
+        <div>
+
+          <label class="font-semibold">
+            Requested Skill
+          </label>
+
+          <select formControlName="requestedSkill" class="mt-2 w-full rounded-lg border p-3">
+
+            <option value="">Select Skill</option>
+
+            @for(skill of skills; track skill._id){
+
+            <option [value]="skill._id">
+              {{skill.title}}
+            </option>
+
+            }
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <button
+        type="submit"
+        class="mt-6 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700">
+
+        Send Request
+
+      </button>
+
+    </form>
+
+  </div>
+
+  <div class="mt-10">
+
+    <h2 class="mb-5 text-3xl font-bold">
+
+      Exchange Requests
+
+    </h2>
+
+    @if(requests.length===0){
+
+    <div class="rounded-lg bg-gray-100 p-5">
+
+      No Requests Found
+
+    </div>
+
+    }
+
+    @else{
+
+    <div class="grid gap-5">
+
+      @for(request of requests;track request._id){
+
+      <div class="rounded-xl border bg-white p-5 shadow">
+
+        <div class="grid gap-4 md:grid-cols-2">
+
+          <div>
+
+            <span class="font-bold">Sender :</span>
+
+            {{request.sender?.name}}
+
+            <br>
+
+            <small class="text-gray-500">
+
+              {{request.sender?.email}}
+
+            </small>
+
+          </div>
+
+          <div>
+
+            <span class="font-bold">Receiver :</span>
+
+            {{request.receiver?.name}}
+
+            <br>
+
+            <small class="text-gray-500">
+
+              {{request.receiver?.email}}
+
+            </small>
+
+          </div>
+
+          <div>
+
+            <span class="font-bold">Offered Skill :</span>
+
+            {{request.offeredSkill?.title}}
+
+          </div>
+
+          <div>
+
+            <span class="font-bold">Requested Skill :</span>
+
+            {{request.requestedSkill?.title}}
+
+          </div>
+
+          <div>
+
+            <span class="font-bold">Status :</span>
+
+            <span
+              [ngClass]="{
+                'bg-yellow-100 text-yellow-700 px-2 py-1 rounded':request.status==='Pending',
+                'bg-green-100 text-green-700 px-2 py-1 rounded':request.status==='Accepted',
+                'bg-red-100 text-red-700 px-2 py-1 rounded':request.status==='Rejected'
+              }">
+
+              {{request.status}}
+
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="mt-5 flex flex-wrap gap-3">
+
+          @if(request.status === 'Pending'){
+
+          <button
+            (click)="updateStatus(request._id,'Accepted')"
+            class="rounded bg-green-600 px-5 py-2 text-white hover:bg-green-700">
+
+            Accept
+
+          </button>
+
+          <button
+            (click)="updateStatus(request._id,'Rejected')"
+            class="rounded bg-yellow-500 px-5 py-2 text-white hover:bg-yellow-600">
+
+            Reject
+
+          </button>
+
+          }
+
+          <button
+            (click)="deleteRequest(request._id)"
+            class="rounded bg-red-600 px-5 py-2 text-white hover:bg-red-700">
+
+            Delete
+
+          </button>
+
+        </div>
+
+      </div>
+
+      }
+
+    </div>
+
+    }
+
+  </div>
+
+</div>

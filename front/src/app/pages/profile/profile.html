@@ -1,0 +1,37 @@
+
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="avatar-circle">
+        <span>{{ user?.name ? user.name.charAt(0).toUpperCase() : 'U' }}</span>
+      </div>
+      <h2>{{ user?.name || 'User Profile' }}</h2>
+      <p class="email">{{ user?.email || 'user@example.com' }}</p>
+    </div>
+    <div class="info-group">
+  <label>Bio</label>
+  <p>{{ user?.bio || 'No bio available' }}</p>
+</div>
+
+    <div class="profile-body">
+      <div class="info-group">
+        <label>Full Name</label>
+        <p>{{ user?.name || 'Not provided' }}</p>
+      </div>
+
+      <div class="info-group">
+        <label>Email Address</label>
+        <p>{{ user?.email || 'Not provided' }}</p>
+      </div>
+
+      <div class="info-group" *ngIf="user?.skills">
+        <label>Skills</label>
+        <p>{{ user.skills }}</p>
+      </div>
+    </div>
+
+    <div class="profile-footer">
+      <button class="btn-edit" (click)="loadProfile()">Refresh Data</button>
+    </div>
+  </div>
+</div>

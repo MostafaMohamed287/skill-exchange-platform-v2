@@ -1,0 +1,139 @@
+
+.skills-container {
+  width: 600px;
+  margin: 40px auto;
+  padding: 25px;
+}
+
+.skills-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.add-skill-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+}
+
+.add-skill-btn:hover {
+  background-color: #0056b3;
+}
+
+hr {
+  margin: 30px 0;
+}
+
+.skill-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.skill-card h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.skill-card p {
+  margin: 7px 0;
+}
+
+.update-skill-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.update-skill-btn:hover {
+  background-color: #218838;
+}
+
+.cancel-btn {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: white;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.cancel-btn:hover {
+  background-color: #f2f2f2;
+}
+
+.skill-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.edit-btn,
+.delete-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-btn {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.edit-btn:hover {
+  background-color: #e0a800;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+
