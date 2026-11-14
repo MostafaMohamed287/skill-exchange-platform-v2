@@ -13,9 +13,9 @@ const createSkill = async (req, res) => {
 const getSkills = async (req, res) => {
   try {
     const skills = await Skill.find().populate({
-      path: "owner",
-      select: "name profileImage bio location -password"
-    });
+  path: "owner",
+  select: "-password"
+});
 
     res.status(200).json(skills);
   } catch (error) {
@@ -40,9 +40,9 @@ const deleteSkill = async (req, res) => {
 const getSkillById = async (req, res) => {
   try {
     const skill = await Skill.findById(req.params.id).populate({
-      path: "owner",
-      select: "name profileImage bio location -password"
-    });
+  path: "owner",
+  select: "-password"
+});
 
     if (!skill) {
       return res.status(404).json({ message: "Skill not found" });
