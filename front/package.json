@@ -31,5 +31,10 @@
     "tailwindcss": "^4.1.12",
     "typescript": "~6.0.2",
     "vitest": "^4.0.8"
-  }
+  },
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "skill-exchange-platform-v2-ch37.vercel.app" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+
 }
