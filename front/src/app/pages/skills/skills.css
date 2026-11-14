@@ -1,8 +1,8 @@
-
 .skills-container {
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   margin: 40px auto;
-  padding: 25px;
+  padding: 15px;
 }
 
 .skills-container h2 {
@@ -135,5 +135,3 @@ hr {
 .delete-btn:hover {
   background-color: #c82333;
 }
-
-
