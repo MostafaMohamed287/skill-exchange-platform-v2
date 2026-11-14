@@ -8,8 +8,13 @@
     </p>
 
     <div class="hero-buttons">
-      <button class="btn-primary">Explore Skills</button>
-      <button class="btn-outline">Join Now</button>
+      <button class="btn-primary" routerLink="/skills">Explore Skills</button>
+
+      @if (auth.isLoggedIn()) {
+        <button class="btn-outline" routerLink="/exchange">My Exchanges</button>
+      } @else {
+        <button class="btn-outline" routerLink="/register">Join Now</button>
+      }
     </div>
   </div>
 </section>
@@ -77,26 +82,16 @@
 
   <div class="skills-container">
 
-    <div class="skill-card">
-      <h3>Angular Development</h3>
-      <p>Ahmed Mohamed</p>
-      <span>⭐⭐⭐⭐⭐</span>
-      <button>View Profile</button>
-    </div>
-
-    <div class="skill-card">
-      <h3>UI/UX Design</h3>
-      <p>Sara Ali</p>
-      <span>⭐⭐⭐⭐</span>
-      <button>View Profile</button>
-    </div>
-
-    <div class="skill-card">
-      <h3>German Language</h3>
-      <p>Omar Hassan</p>
-      <span>⭐⭐⭐⭐⭐</span>
-      <button>View Profile</button>
-    </div>
+    @for (skill of featuredSkills(); track skill._id) {
+      <div class="skill-card">
+        <h3>{{ skill.title }}</h3>
+        <p>{{ skill.owner?.name || 'Unknown' }}</p>
+        <p>{{ skill.category }} • {{ skill.level }}</p>
+        <button routerLink="/skills">View Skills</button>
+      </div>
+    } @empty {
+      <p>No skills yet. Be the first to add one!</p>
+    }
 
   </div>
 </section>

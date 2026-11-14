@@ -8,11 +8,15 @@ const {
   getSkillById,
   updateSkill,
 } = require("../controllers/skillController");
+const { auth } = require("../middleware/authMiddleware");
 
-router.post("/", createSkill);
+// القراءة متاحة للكل
 router.get("/", getSkills);
 router.get("/:id", getSkillById);
-router.put("/:id", updateSkill);
-router.delete("/:id", deleteSkill);
+
+// الإضافة والتعديل والمسح لازم تسجيل دخول
+router.post("/", auth, createSkill);
+router.put("/:id", auth, updateSkill);
+router.delete("/:id", auth, deleteSkill);
 
 module.exports = router;

@@ -9,50 +9,79 @@
       Discover what our users say about their learning experience.
     </p>
 
-    <button
-      (click)="toggleForm()"
-      class="mt-6 px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
-    >
-      {{ showForm() ? 'Cancel' : '+ Add Review' }}
-    </button>
+    @if (auth.isLoggedIn()) {
+      <button
+        (click)="toggleForm()"
+        class="mt-6 px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+      >
+        {{ showForm() ? 'Cancel' : '+ Add Review' }}
+      </button>
+    } @else {
+      <p class="mt-6 text-gray-600">
+        <a routerLink="/login" class="font-semibold text-blue-600 hover:underline">Login</a>
+        to add a review.
+      </p>
+    }
   </div>
 
-  @if (showForm()) {
+  @if (showForm() && auth.isLoggedIn()) {
     <div class="mt-8 max-w-xl mx-auto rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-      <h3 class="text-xl font-semibold text-slate-800 mb-4">Add a New Review</h3>
+      <h3 class="text-xl font-semibold text-slate-800 mb-1">Add a New Review</h3>
+      <p class="mb-4 text-sm text-gray-500">
+        Reviewing as <span class="font-semibold">{{ auth.user()?.name }}</span>
+      </p>
 
       <div class="flex flex-col gap-3">
-        <input
-          type="text"
-          [(ngModel)]="newReview.reviewer"
-          placeholder="Reviewer User ID"
+
+        <select
+          [ngModel]="revieweeId()"
+          (ngModelChange)="onRevieweeChange($event)"
           class="border border-gray-300 rounded-lg px-4 py-2"
-        />
-        <input
-          type="text"
-          [(ngModel)]="newReview.reviewee"
-          placeholder="Reviewee User ID"
+        >
+          <option value="">Who do you want to review?</option>
+          @for (user of otherUsers(); track user._id) {
+            <option [value]="user._id">{{ user.name }}</option>
+          }
+        </select>
+
+        <select
+          [(ngModel)]="skillId"
           class="border border-gray-300 rounded-lg px-4 py-2"
-        />
-        <input
-          type="text"
-          [(ngModel)]="newReview.skill"
-          placeholder="Skill ID"
+        >
+          <option value="">
+            {{ revieweeId() ? 'Which skill?' : 'Choose a user first' }}
+          </option>
+          @for (skill of revieweeSkills(); track skill._id) {
+            <option [value]="skill._id">{{ skill.title }}</option>
+          }
+        </select>
+
+        @if (revieweeId() && revieweeSkills().length === 0) {
+          <p class="text-sm text-gray-500">This user has no skills to review yet.</p>
+        }
+
+        <select
+          [(ngModel)]="rating"
           class="border border-gray-300 rounded-lg px-4 py-2"
-        />
-        <input
-          type="number"
-          [(ngModel)]="newReview.rating"
-          min="1"
-          max="5"
-          placeholder="Rating (1-5)"
-          class="border border-gray-300 rounded-lg px-4 py-2"
-        />
+        >
+          <option [ngValue]="5">⭐⭐⭐⭐⭐ (5)</option>
+          <option [ngValue]="4">⭐⭐⭐⭐ (4)</option>
+          <option [ngValue]="3">⭐⭐⭐ (3)</option>
+          <option [ngValue]="2">⭐⭐ (2)</option>
+          <option [ngValue]="1">⭐ (1)</option>
+        </select>
+
         <textarea
-          [(ngModel)]="newReview.comment"
+          [(ngModel)]="comment"
           placeholder="Comment"
           class="border border-gray-300 rounded-lg px-4 py-2"
         ></textarea>
+
+        @if (errorMessage()) {
+          <div class="rounded-lg border border-red-300 bg-red-100 p-3 text-center text-red-700">
+            {{ errorMessage() }}
+          </div>
+        }
 
         <button
           (click)="submitReview()"

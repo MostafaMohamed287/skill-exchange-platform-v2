@@ -49,15 +49,15 @@
         <p>Fill in your details and join our community.</p>
       </div>
 
-      @if (successMessage) {
+      @if (successMessage()) {
         <div class="message success-message">
-          {{ successMessage }}
+          {{ successMessage() }}
         </div>
       }
 
-      @if (errorMessage) {
+      @if (errorMessage()) {
         <div class="message error-message">
-          {{ errorMessage }}
+          {{ errorMessage() }}
         </div>
       }
 

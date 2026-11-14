@@ -9,7 +9,10 @@ const {
   updateRequest,
   deleteRequest,
 } = require("../controllers/exchangeRequestController");
+const { auth } = require("../middleware/authMiddleware");
 
+// كل راوتات الـ exchange لازم تسجيل دخول
+router.use(auth);
 
 router.get("/", getAllRequests);
 

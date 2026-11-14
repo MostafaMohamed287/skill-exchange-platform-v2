@@ -1,9 +1,7 @@
-
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
-import { environment } from '../../../environments/environment';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -14,43 +12,34 @@ import { environment } from '../../../environments/environment';
 })
 export class LoginComponent {
 
-  loginForm: FormGroup;
-  errorMessage: string = '';
+  private fb = inject(FormBuilder);
+  private auth = inject(Auth);
+  private router = inject(Router);
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private router: Router
-  ) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
-  }
+  loginForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  });
+
+  errorMessage = signal('');
 
   onSubmit() {
-    this.errorMessage = '';
+    this.errorMessage.set('');
 
     if (this.loginForm.invalid) {
-      this.errorMessage = 'Please fill in all fields correctly.';
+      this.errorMessage.set('Please fill in all fields correctly.');
       return;
     }
 
-    const loginData = this.loginForm.value;
-
-    this.http.post<any>(
-      `${environment.apiUrl}/users/login`,
-      loginData
-    ).subscribe({
-      next: (response) => {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
-        this.router.navigate(['/home']);
+    this.auth.login(this.loginForm.value).subscribe({
+      next: (response: any) => {
+        this.auth.saveSession(response.token, response.user);
+        this.router.navigate(['/']);
       },
       error: (err) => {
-        this.errorMessage =
-          err.error?.message ||
-          'Login failed, please check your credentials.';
+        this.errorMessage.set(
+          err.error?.message || 'Login failed, please check your credentials.'
+        );
       }
     });
   }

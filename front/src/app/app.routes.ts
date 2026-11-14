@@ -8,6 +8,7 @@ import { Skills } from './pages/skills/skills';
 import { ExchangeRequests } from './pages/exchange-requests/exchange-requests';
 import { ReviewComponent } from './pages/reviews/reviews';
 import { NotFound } from './pages/not-found/not-found';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -16,12 +17,13 @@ export const routes: Routes = [
 
   { path: 'register', component: Register },
 
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
 
   { path: 'skills', component: Skills },
 
-  { path: 'exchange', component: ExchangeRequests },
+  { path: 'exchange', component: ExchangeRequests, canActivate: [authGuard] },
 
-{ path: 'reviews', component: ReviewComponent },
+  { path: 'reviews', component: ReviewComponent },
+
   { path: '**', component: NotFound }
 ];
