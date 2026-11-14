@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 interface Review {
   _id?: string;
@@ -22,7 +23,7 @@ interface Review {
 export class ReviewComponent implements OnInit {
 
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/reviews';
+  private apiUrl = `${environment.apiUrl}/reviews`;
 
   reviews = signal<Review[]>([]);
   showForm = signal(false);

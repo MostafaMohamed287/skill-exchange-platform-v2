@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
 
 interface Skill {
   _id: string;
@@ -22,8 +23,7 @@ interface Skill {
 export class Home implements OnInit {
 
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/skills';
-
+  private apiUrl = `${environment.apiUrl}/skills`;
   allSkills: Skill[] = [];
   searchResults: Skill[] = [];
   searchTerm: string = '';

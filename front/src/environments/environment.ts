@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:5000/api'
+  production: true,
+  apiUrl: 'https://skill-exchange-platform-v2-ch37-bb4tjt9y5.vercel.app/api'
 };
